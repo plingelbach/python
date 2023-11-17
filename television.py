@@ -34,14 +34,20 @@ class Television:
 
     def volume_up(self) -> None:
         """Increase the TV volume when the TV is on."""
-        if self._status and not self._muted:
+        if self._status:
             self._volume = min(self._volume + 1, self.MAX_VOLUME)
+            self._muted = False
 
     def volume_down(self) -> None:
         """Decrease the TV volume when the TV is on."""
-        if self._status and not self._muted:
+        if self._status:
             self._volume = max(self._volume - 1, self.MIN_VOLUME)
+            self._muted = False
 
     def __str__(self) -> str:
         """Return the formatted string representation of the TV object."""
-        return f"Power = [{self._status}], Channel = [{self._channel}], Volume = [{self._volume}]"
+        if self._muted:
+            volume = Television.MIN_VOLUME
+        else:
+            volume = self._volume
+        return f"Power = {self._status}, Channel = {self._channel}, Volume = {volume}"
